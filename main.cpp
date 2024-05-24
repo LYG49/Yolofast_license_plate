@@ -7,7 +7,7 @@ YOLO::YOLO(Net_config config)
 	this->nmsThreshold = config.nmsThreshold;
 	this->inpWidth = config.inpWidth;
 	this->inpHeight = config.inpHeight;
-	strcpy_s(this->netname, config.netname.c_str());
+	strcpy(this->netname, config.netname.c_str());
 
 	ifstream ifs(config.classesFile.c_str());
 	string line;
@@ -18,7 +18,7 @@ YOLO::YOLO(Net_config config)
 	this->net.setPreferableTarget(DNN_TARGET_CPU);
 }
 
-void YOLO::postprocess(Mat& frame, const vector<Mat>& outs)   // Remove the bounding boxes with low confidence using non-maxima suppression
+void YOLO::postprocess(Mat& frame, const vector<Mat>& outs)   
 {
 	vector<int> classIds;
 	vector<float> confidences;
@@ -26,16 +26,14 @@ void YOLO::postprocess(Mat& frame, const vector<Mat>& outs)   // Remove the boun
 
 	for (size_t i = 0; i < outs.size(); ++i)
 	{
-		// Scan through all the bounding boxes output from the network and keep only the
-		// ones with high confidence scores. Assign the box's class label as the class
-		// with the highest score for the box.
+
 		float* data = (float*)outs[i].data;
 		for (int j = 0; j < outs[i].rows; ++j, data += outs[i].cols)
 		{
 			Mat scores = outs[i].row(j).colRange(5, outs[i].cols);
 			Point classIdPoint;
 			double confidence;
-			// Get the value and location of the maximum score
+
 			minMaxLoc(scores, 0, &confidence, 0, &classIdPoint);
 			if (confidence > this->confThreshold)
 			{
@@ -83,6 +81,7 @@ void YOLO::drawPred(int classId, float conf, int left, int top, int right, int b
 	int baseLine;
 	Size labelSize = getTextSize(label, FONT_HERSHEY_SIMPLEX, 0.5, 1, &baseLine);
 	top = max(top, labelSize.height);
+	cout << "Detected: " << label << endl;
 	//rectangle(frame, Point(left, top - int(1.5 * labelSize.height)), Point(left + int(1.5 * labelSize.width), top + baseLine), Scalar(0, 255, 0), FILLED);
 	putText(frame, label, Point(left, top), FONT_HERSHEY_SIMPLEX, 0.75, Scalar(0, 255, 0), 1);
 }
@@ -106,8 +105,8 @@ void YOLO::detect(Mat& frame)
 
 int main()
 {
-	YOLO yolo_model(yolo_nets[2]);
-	string imgpath = "person.jpg";
+	YOLO yolo_model(yolo_nets[0]);
+	string imgpath = "car_image.jpg";
 	Mat srcimg = imread(imgpath);
 	yolo_model.detect(srcimg);
 

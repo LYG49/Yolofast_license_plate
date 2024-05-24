@@ -1,0 +1,3 @@
+/home/xs/Owen/c++/yolofast_license_plate/CMakeFiles/yolofast_license_plate.dir
+/home/xs/Owen/c++/yolofast_license_plate/CMakeFiles/edit_cache.dir
+/home/xs/Owen/c++/yolofast_license_plate/CMakeFiles/rebuild_cache.dir

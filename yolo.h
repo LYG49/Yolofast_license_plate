@@ -38,9 +38,6 @@ class YOLO
 		void drawPred(int classId, float conf, int left, int top, int right, int bottom, Mat& frame);
 };
 
-Net_config yolo_nets[4] = {
-	{0.5, 0.4, 416, 416,"coco.names", "yolov3/yolov3.cfg", "yolov3/yolov3.weights", "yolov3"},
-	{0.5, 0.4, 608, 608,"coco.names", "yolov4/yolov4.cfg", "yolov4/yolov4.weights", "yolov4"},
-	{0.5, 0.4, 320, 320,"coco.names", "yolo-fastest/yolo-fastest-xl.cfg", "yolo-fastest/yolo-fastest-xl.weights", "yolo-fastest"},
-	{0.5, 0.4, 320, 320,"coco.names", "yolobile/csdarknet53s-panet-spp.cfg", "yolobile/yolobile.weights", "yolobile"}
+Net_config yolo_nets[1] = {
+	{0.5, 0.4, 320, 320,"license_plate.names", "yolo-fastest/yolo-fastest-1.1.cfg", "yolo-fastest/yolo-fastest-1_final.weights", "yolo-fastest"}
 };
