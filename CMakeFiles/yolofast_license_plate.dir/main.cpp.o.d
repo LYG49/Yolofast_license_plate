@@ -243,4 +243,4 @@ CMakeFiles/yolofast_license_plate.dir/main.cpp.o: \
  /usr/local/include/opencv4/opencv2/imgproc/segmentation.hpp \
  /usr/local/include/opencv4/opencv2/highgui.hpp \
  /usr/local/include/opencv4/opencv2/imgcodecs.hpp \
- /usr/local/include/opencv4/opencv2/videoio.hpp
+ /usr/local/include/opencv4/opencv2/videoio.hpp /usr/include/c++/9/thread

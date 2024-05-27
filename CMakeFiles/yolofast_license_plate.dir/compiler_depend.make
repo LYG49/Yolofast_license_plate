@@ -134,6 +134,7 @@ CMakeFiles/yolofast_license_plate.dir/main.cpp.o: main.cpp \
   /usr/include/c++/9/streambuf \
   /usr/include/c++/9/string \
   /usr/include/c++/9/system_error \
+  /usr/include/c++/9/thread \
   /usr/include/c++/9/tuple \
   /usr/include/c++/9/type_traits \
   /usr/include/c++/9/typeinfo \
@@ -731,6 +732,10 @@ main.cpp:
 
 /usr/include/x86_64-linux-gnu/bits/wchar.h:
 
+/usr/include/c++/9/thread:
+
+/usr/include/x86_64-linux-gnu/c++/9/bits/ctype_inline.h:
+
 /usr/include/c++/9/ratio:
 
 /usr/include/c++/9/type_traits:
@@ -861,8 +866,6 @@ main.cpp:
 
 /usr/include/x86_64-linux-gnu/c++/9/bits/ctype_base.h:
 
-/usr/include/x86_64-linux-gnu/c++/9/bits/ctype_inline.h:
-
 /usr/include/c++/9/ext/aligned_buffer.h:
 
 /usr/include/x86_64-linux-gnu/c++/9/bits/gthr-default.h:
@@ -891,8 +894,8 @@ main.cpp:
 
 /usr/lib/gcc/x86_64-linux-gnu/9/include/mmintrin.h:
 
+/usr/lib/gcc/x86_64-linux-gnu/9/include/stdint.h:
+
 /usr/include/x86_64-linux-gnu/bits/types/struct_tm.h:
 
 /usr/lib/gcc/x86_64-linux-gnu/9/include/stdarg.h:
-
-/usr/lib/gcc/x86_64-linux-gnu/9/include/stdint.h:

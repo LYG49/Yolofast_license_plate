@@ -1,4 +1,7 @@
 #include "yolo.h"
+#include <thread>
+#include <vector>
+#include <memory>
 
 YOLO::YOLO(Net_config config)
 {
@@ -95,24 +98,61 @@ void YOLO::detect(Mat& frame)
 	this->net.forward(outs, this->net.getUnconnectedOutLayersNames());
 	this->postprocess(frame, outs);
 
-	vector<double> layersTimes;
-	double freq = getTickFrequency() / 1000;
-	double t = net.getPerfProfile(layersTimes) / freq;
-	string label = format("%s Inference time : %.2f ms", this->netname, t);
-	putText(frame, label, Point(0, 30), FONT_HERSHEY_SIMPLEX, 1, Scalar(0, 0, 255), 2);
+	// vector<double> layersTimes;
+	// double freq = getTickFrequency() / 1000;
+	// double t = net.getPerfProfile(layersTimes) / freq;
+	// string label = format("%s Inference time : %.2f ms", this->netname, t);
+	// putText(frame, label, Point(0, 30), FONT_HERSHEY_SIMPLEX, 1, Scalar(0, 0, 255), 2);
 	//imwrite(format("%s_out.jpg", this->netname), frame);
 }
 
-int main()
+void processStream(const string& source, YOLO& yolo_model, const string& window_name)
 {
-	YOLO yolo_model(yolo_nets[0]);
-	string imgpath = "car_image.jpg";
-	Mat srcimg = imread(imgpath);
-	yolo_model.detect(srcimg);
+    VideoCapture cap(source);
+    if (!cap.isOpened()) {
+        cerr << "Error: Could not open the RTSP stream: " << source << endl;
+        return;
+    }
 
-	static const string kWinName = "Deep learning object detection in OpenCV";
-	namedWindow(kWinName, WINDOW_NORMAL);
-	imshow(kWinName, srcimg);
-	waitKey(0);
-	destroyAllWindows();
+    namedWindow(window_name, WINDOW_NORMAL);
+
+    Mat frame;
+    while (true) {
+        cap >> frame;
+        if (frame.empty()) {
+            cerr << "Error: Could not read frame from RTSP stream: " << source << endl;
+            break;
+        }
+        yolo_model.detect(frame);
+        imshow(window_name, frame);
+
+
+        if (waitKey(30) >= 0) break;
+;
+    }
+
+    destroyWindow(window_name);
+
+}
+int main(int argc, char** argv)
+{
+    if (argc < 2) {
+        cerr << "Usage: ./executable <source_path1> <source_path2> ..." << endl;
+        return -1;
+    }
+
+    YOLO yolo_model(yolo_nets[0]);
+
+    vector<thread> threads;
+    for (int i = 1; i < argc; ++i) {
+        string source = argv[i];
+        string window_name = "Stream " + to_string(i);
+        threads.emplace_back(processStream, source, ref(yolo_model), window_name);
+    }
+
+    for (auto& t : threads) {
+        if (t.joinable()) t.join();
+    }
+
+    return 0;
 }
