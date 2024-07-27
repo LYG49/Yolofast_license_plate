@@ -39,5 +39,5 @@ class YOLO
 };
 
 Net_config yolo_nets[1] = {
-	{0.5, 0.4, 320, 320,"license_plate.names", "yolo-fastest/yolo-fastest-1.1.cfg", "yolo-fastest/yolo-fastest-1_final.weights", "yolo-fastest"}
+	{0.5, 0.4, 320, 320,"yolo-fastest/license_plate.names", "yolo-fastest/yolo-fastest-1.1.cfg", "yolo-fastest/yolo-fastest-1_final.weights", "yolo-fastest"}
 };
